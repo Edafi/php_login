@@ -10,14 +10,13 @@
     }
     if(isset($_POST["password"])){
         $password = htmlentities($_POST["password"]);
-        echo "$password <br>";
     }
 
 
     $email = $conn->real_escape_string($email);                         //Убираем sql injection
     $password = $conn->real_escape_string($password);                   //Убираем sql injection
-
-    if(select_sql($conn, "SELECT email, password FROM user WHERE email = '$email' and password = '$password'") === true){   //Проверяем есть ли такой пользователь в базе
+    $password_db = get_password_sql($conn, "SELECT email, password FROM user WHERE email = '$email'");
+    if(select_sql($conn, "SELECT email FROM user WHERE email = '$email'") && password_verify($password, $password_db)){   //Проверяем есть ли такой пользователь в базе
         close_conn($conn);
         $_SESSION["isLogined"] = "Добро пожаловать ".$email;
         header('Location: user.php');

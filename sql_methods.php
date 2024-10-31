@@ -23,6 +23,14 @@
                 return false;                       //Такого юзера нет            
         }
     }
+    function get_password_sql(&$conn, $sql_query){
+        if ($result = $conn -> query($sql_query)){
+            if($result->num_rows == 1){
+                $row = $result -> fetch_assoc();
+                return $row["password"];
+            }
+        }
+    }
     function close_conn (&$conn){
         $conn->close();
     }

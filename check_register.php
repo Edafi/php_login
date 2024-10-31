@@ -1,6 +1,5 @@
 <?php
     require_once "sql_methods.php";
-    require_once "secret_key.php";
     session_start();
 
     $conn = create_conn();                                          // Создаем подключение к бд
@@ -11,7 +10,6 @@
     }
     if(isset($_POST["password"])){
         $password = htmlentities($_POST["password"]);
-        echo "$password 1<br>";
     }
 
     $isEmailValid = false;
@@ -24,14 +22,11 @@
     }
     else{
         $_SESSION["isEmailValid"] = "Не правильная почта";
-        echo $_SESSION["isEmailValid"];
     }
     if ( preg_match("/^[^А-Яа-я]*$/", $password) && strlen($password)>=8){
         $isPasswordValid = true;
     }else{
         $_SESSION["isPasswordValid"] = "Используйте латинский алфавит и спец. символы";
-        echo $_SESSION["isPasswordValid"];
-        echo "$password 2<br>";
     }
     //_______________________________________________________________________________________________________________//
     //                Проверяем существует ли такой пользователь или нет, если нет, то регистрируем 
@@ -40,6 +35,7 @@
         $email = $conn->real_escape_string($email);                         //Убираем sql injection
         $password = $conn->real_escape_string($password);                   //Убираем sql injection
         if(select_sql($conn, "SELECT email FROM user WHERE email = '$email'") === false){                        //Проверяем есть ли такой пользователь в базе
+            $password = password_hash($password, PASSWORD_DEFAULT);
             insert_sql($conn, "INSERT INTO user (email, password) VALUES ('$email', '$password')");              //Запись в бд
             close_conn($conn);
             $_SESSION["isValidRegistration"] = "Вы успешно зарегистрированы";
