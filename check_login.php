@@ -25,6 +25,7 @@
     else{
         close_conn($conn);
         $_SESSION["isLogined"] = "Не правильно введены данные";
+        header('Location: login.php');
     }
 
 ?>
