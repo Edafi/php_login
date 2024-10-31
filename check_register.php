@@ -40,8 +40,6 @@
         $email = $conn->real_escape_string($email);                         //Убираем sql injection
         $password = $conn->real_escape_string($password);                   //Убираем sql injection
         if(select_sql($conn, "SELECT email FROM user WHERE email = '$email'") === false){                        //Проверяем есть ли такой пользователь в базе
-            
-$encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, 'I want to encrypt this', MCRYPT_MODE_ECB);
             insert_sql($conn, "INSERT INTO user (email, password) VALUES ('$email', '$password')");              //Запись в бд
             close_conn($conn);
             $_SESSION["isValidRegistration"] = "Вы успешно зарегистрированы";
