@@ -1,5 +1,5 @@
 # How to run
-'docker-compose up'
+`docker-compose up -d`
 
 ## Troubleshooting
 I dont really know how to set a proper host on mysqli, so sometimes site doesnot work properly. This issue appears because 
