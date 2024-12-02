@@ -1,6 +1,7 @@
 <?php
+	error_reporting(!E_ALL);
     function create_conn (){
-        $conn = new mysqli("localhost", "dan", "54321", "php_login");
+        $conn = new mysqli("172.18.0.4:3306", "root", "admin", "php_login");
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
@@ -8,10 +9,10 @@
     }
     function insert_sql(&$conn, $sql_query){
         if ($conn->query($sql_query)){
-            echo "Данные успешно добавлены";
+        	$status = true;
         }
         else{
-            echo "Что-то не так";
+        	$status = false;
         }
     }
     function select_sql(&$conn, $sql_query){

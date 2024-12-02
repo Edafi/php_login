@@ -1,4 +1,5 @@
 <?php
+	error_reporting(!E_ALL);
     session_start();
     require_once "api.php";
     if (!isset($_SESSION["isEmailValid"]) && !isset($_SESSION["isPasswordValid"]) && !isset($_SESSION["isAlredyRegistered"])){

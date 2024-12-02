@@ -1,4 +1,5 @@
 <?php
+	error_reporting(!E_ALL);
     session_start();
     unset($_SESSION["isValidRegistration"]);
     unset($_SESSION["isEmailValid"]);
