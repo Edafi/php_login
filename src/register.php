@@ -1,16 +1,16 @@
 <?php
-	//error_reporting(!E_ALL);
-    session_start();
+    require_once "session.php";
+	Session::start_session();
     require_once "api.php";
-    if (!isset($_SESSION["isEmailValid"]))
-        $_SESSION["isEmailValid"] = "";
-    if(!isset($_SESSION["isPasswordValid"]))
-        $_SESSION["isPasswordValid"] = "";
-    if(!isset($_SESSION["isAlreadyRegistered"]))
-        $_SESSION["isAlreadyRegistered"] = "";
-    $isEmailValid = $_SESSION["isEmailValid"];
-    $isPasswordValid = $_SESSION["isPasswordValid"];
-    $isAlreadyRegistered = $_SESSION["isAlreadyRegistered"];
+    $isEmailValid = "";
+    $isPasswordValid = "";
+    $isAlreadyRegistered = "";
+    if (Session::isset_isEmailValid())
+        $isEmailValid = Session::get_isEmailValid();
+    if(Session::isset_isPasswdValid())
+        $isPasswordValid = Session::get_isPasswdValid();
+    if(Session::isset_isAlreadyRegistered())
+        $isAlreadyRegistered = Session::get_isAlreadyRegistered();
 ?>
 
 <!DOCTYPE html>
@@ -52,12 +52,5 @@
     </body>
 </html>
 <?php
-    unset($_SESSION["isValidRegistration"]);
-    unset($_SESSION["isEmailValid"]);
-    unset($_SESSION["isPasswordValid"]);
-    unset($_SESSION["isAlreadyRegistered"]);
-    unset($_SESSION["isLogined"]);
-    unset($_SESSION["email"]);
-    unset($_SESSION["wrongPasswd"]);
-    unset($_SESSION["wrongLogin"]);
+    Session::unset_session();
 ?>

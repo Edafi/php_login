@@ -1,7 +1,7 @@
 <?php
-	//error_reporting(!E_ALL);
+    require_once "session.php";
     require_once "sql_methods.php";
-    session_start();
+    Session::start_session();
 
     $email = "";
     $password = "";
@@ -21,12 +21,12 @@
         $isEmailValid = true;
     }
     else{
-        $_SESSION["isEmailValid"] = "Не правильная почта";
+        Session::set_isEmailValid("Не правильная почта");
     }
     if ( preg_match("/^[^А-Яа-я]*$/", $password) && strlen($password)>=8){
         $isPasswordValid = true;
     }else{
-        $_SESSION["isPasswordValid"] = "Используйте латинский алфавит и спец. символы";
+        Session::set_isPasswdValid("Используйте латинский алфавит и спец. символы");
     }
     //_______________________________________________________________________________________________________________//
     //                Проверяем существует ли такой пользователь или нет, если нет, то регистрируем 
@@ -35,11 +35,11 @@
         $user = new User($email, $password);
         if($user->select_user_db() === false){                        //Проверяем есть ли такой пользователь в базе
             $user->create_user_db();
-            $_SESSION["isValidRegistration"] = true;
+            Session::set_isRegistrationValid(true);
             header('Location: login.php');
         }   
         else{
-            $_SESSION["isAlreadyRegistered"] = "Пользователь с такой почтой уже есть";
+            Session::set_isAlreadyRegistered("Пользователь с такой почтой уже есть");
             header('Location: register.php');
         }
     }

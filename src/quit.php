@@ -1,14 +1,7 @@
 <?php
-	error_reporting(!E_ALL);
-    session_start();
-    unset($_SESSION["isValidRegistration"]);
-    unset($_SESSION["isEmailValid"]);
-    unset($_SESSION["isPasswordValid"]);
-    unset($_SESSION["isAlredyRegistered"]);
-    unset($_SESSION["isLogined"]);
-    unset($_SESSION["email"]);
-    unset($_SESSION["wrongPasswd"]);
-    unset($_SESSION["wrongLogin"]);
-    session_destroy();
+    require_once "session.php";
+    Session::start_session();
+    Session::unset_session();
+    Session::destroy_session();
     header('Location: login.php');
 ?>

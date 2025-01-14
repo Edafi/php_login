@@ -1,6 +1,7 @@
 <?php
 	//error_reporting(!E_ALL);
-    session_start();
+    require_once "session.php";
+    Session::start_session();
     require_once "api.php";
 ?>
 
@@ -25,14 +26,14 @@
                 <div class="col-md-4">
                     <h2 class="text-center">Войти</h2>
                     <?php
-                    if(isset($_SESSION["isValidRegistration"])){?>
+                    if(Session::isset_isRegistrationValid()){?>
                             <label for="isRegistered" style="color: #61dc00;"><?php echo "Регистрация прошла успешно" ?></label>  
                     <?php
                     }
-                    else if(isset($_SESSION["wrongLogin"])){?>
+                    else if(Session::isset_wrongLogin()){?>
                         <label for="isLogined" style="color: #d30000;"><?php echo "Пользователя с такой почтой нет" ?></label>
                     <?php }
-                    else if (isset($_SESSION["wrongPasswd"])){?>
+                    else if (Session::isset_wrongPasswd()){?>
                         <label for="isLogined" style="color: #d30000;"><?php echo "Неверный пароль" ?></label>
                     <?php } ?>
                     <form action="check_login.php" method="POST">
@@ -55,12 +56,5 @@
     </body>
 </html>
 <?php
-    unset($_SESSION["isValidRegistration"]);
-    unset($_SESSION["isEmailValid"]);
-    unset($_SESSION["isPasswordValid"]);
-    unset($_SESSION["isAlredyRegistered"]);
-    unset($_SESSION["isLogined"]);
-    unset($_SESSION["email"]);
-    unset($_SESSION["wrongPasswd"]);
-    unset($_SESSION["wrongLogin"]);
+    Session::unset_session();
 ?>

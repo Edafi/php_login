@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    if (!isset($_SESSION["isLogined"]) || !isset($_SESSION["email"])){
-        unset($_SESSION["isLogined"]);
-        unset($_SESSION["email"]);
+    require_once "session.php";
+    Session::start_session();
+    if (!Session::isset_isLogined() || !Session::isset_email()) {
+        Session::unset_session();
         header('Location: login.php');
     }
     require_once "api.php";
@@ -30,7 +30,7 @@
         <div class="container">
             <div class="row justify-content-center" style="margin-top: 20px;">
                 <div class="col-md-4">
-                    <h2 class="text-center"><?php echo "Hello"." ".$_SESSION["email"] ?></h2>
+                    <h2 class="text-center"><?php echo "Hello"." ".Session::get_email() ?></h2>
                 </div>
             </div>
         </div>
