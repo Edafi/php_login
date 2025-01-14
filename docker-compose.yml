@@ -1,4 +1,5 @@
-version: "3.8"
+version: '3.9'
+
 services:
   php:
     build:
@@ -8,10 +9,12 @@ services:
     volumes:
       - ./src:/var/www/public
     networks:
-      - app-network
+      app-network:
+        ipv4_address: 172.18.0.2
     environment:
       PHP_IDE_CONFIG: serverName=Docker
     restart: unless-stopped
+
   nginx:
     image: nginx:latest
     container_name: nginx_app
@@ -23,22 +26,32 @@ services:
     depends_on:
       - php
     networks:
-      - app-network
+      app-network:
+        ipv4_address: 172.18.0.3
     restart: unless-stopped
+
   mariadb:
     image: mariadb:latest
     container_name: mariadb_app
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: php_login
+    volumes:
+      - ./mariadb/:/var/lib/mysql
     ports:
       - 3306:3306
     depends_on:
       - php
+      - nginx
     networks:
-      - app-network
+      app-network:
+        ipv4_address: 172.18.0.4
     restart: unless-stopped
+
 networks:
   app-network:
     driver: bridge
-
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1

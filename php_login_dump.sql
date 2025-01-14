@@ -1,9 +1,9 @@
 /*M!999999\- enable the sandbox mode */ 
--- MariaDB dump 10.19-11.5.2-MariaDB, for Linux (x86_64)
+-- MariaDB dump 10.19-11.6.2-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: php_login
 -- ------------------------------------------------------
--- Server version	11.5.2-MariaDB
+-- Server version	11.6.2-MariaDB-ubu2404
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -17,6 +17,14 @@
 /*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
 
 --
+-- Current Database: `php_login`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `php_login` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci */;
+
+USE `php_login`;
+
+--
 -- Table structure for table `user`
 --
 
@@ -28,7 +36,7 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +46,10 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` VALUES
-(7,'test@gmail.com','$2y$10$MWsCThoar0syRay1Qafck.dVO/Dyx4r.FgAVj8N0MT7W95pgW4oYW');
+(7,'test@gmail.com','$2y$10$MWsCThoar0syRay1Qafck.dVO/Dyx4r.FgAVj8N0MT7W95pgW4oYW'),
+(8,'hello_v2@gmail.com','$2y$10$VX7IYuMijTYLoXbqVJc36.0RDZ8Q8aAe.MlZO/KtFsBIy2GfxfY9e'),
+(9,'hello_everyone@gmail.com','$2y$10$BhIzb/1GMbMULACY7xdCNev5ervYlLzHFsCK9DVL9ZLKv1JZjo6hO'),
+(10,'qwerty@gmail.com','$2y$10$KsNFu.LM3QdedgUbw77IBeWCk5uXnZioq0/.ubq07gb9LISLho1ie');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +62,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2024-10-31 11:50:04
+-- Dump completed on 2025-01-14  7:22:34

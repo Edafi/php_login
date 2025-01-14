@@ -1,9 +1,8 @@
 <?php
-	error_reporting(!E_ALL);
+	//error_reporting(!E_ALL);
     require_once "sql_methods.php";
     session_start();
 
-    $conn = create_conn();                                          // Создаем подключение к бд
     $email = "";
     $password = "";
     if(isset($_POST["email"])){                                     // Получаем почту и пароль введенные пользователем
@@ -33,23 +32,18 @@
     //                Проверяем существует ли такой пользователь или нет, если нет, то регистрируем 
 
     if($isEmailValid && $isPasswordValid){
-        $email = $conn->real_escape_string($email);                         //Убираем sql injection
-        $password = $conn->real_escape_string($password);                   //Убираем sql injection
-        if(select_sql($conn, "SELECT email FROM user WHERE email = '$email'") === false){                        //Проверяем есть ли такой пользователь в базе
-            $password = password_hash($password, PASSWORD_DEFAULT);
-            insert_sql($conn, "INSERT INTO user (email, password) VALUES ('$email', '$password')");              //Запись в бд
-            close_conn($conn);
-            $_SESSION["isValidRegistration"] = "Вы успешно зарегистрированы";
+        $user = new User($email, $password);
+        if($user->select_user_db() === false){                        //Проверяем есть ли такой пользователь в базе
+            $user->create_user_db();
+            $_SESSION["isValidRegistration"] = true;
             header('Location: login.php');
         }   
         else{
-            $_SESSION["isAlredyRegistered"] = "Пользователь с такой почтой уже есть";
-            close_conn($conn);
+            $_SESSION["isAlreadyRegistered"] = "Пользователь с такой почтой уже есть";
             header('Location: register.php');
         }
     }
     else{
-        close_conn($conn);
         header('Location: register.php');
     }
 

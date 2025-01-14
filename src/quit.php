@@ -6,6 +6,9 @@
     unset($_SESSION["isPasswordValid"]);
     unset($_SESSION["isAlredyRegistered"]);
     unset($_SESSION["isLogined"]);
+    unset($_SESSION["email"]);
+    unset($_SESSION["wrongPasswd"]);
+    unset($_SESSION["wrongLogin"]);
     session_destroy();
     header('Location: login.php');
 ?>

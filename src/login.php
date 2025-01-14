@@ -1,13 +1,7 @@
 <?php
-	error_reporting(!E_ALL);
+	//error_reporting(!E_ALL);
     session_start();
     require_once "api.php";
-    if (!isset($_SESSION["isValidRegistration"]) && !isset($_SESSION["isLogined"])){
-        $_SESSION["isValidRegistration"] = "";
-        $_SESSION["isLogined"] = "";
-    }
-    $isValidRegistration = $_SESSION["isValidRegistration"];
-    $isLogined = $_SESSION["isLogined"];
 ?>
 
 <!DOCTYPE html>
@@ -17,24 +11,29 @@
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
-    <div class="p-5 bg-primary text-white text-center">
+    <div class="p-5 bg-primary text-white text-center" style="height: 300px; overflow: hidden; position: relative;">
         <?php $message = get_api_data();
         if(strpos($message, "https://") !== false){?>
-            <img src=" <?php echo $message ?> "/>
+            <img src=" <?php echo $message ?> "style="width: 350px; height: 200px; object-fit: contain;"/>
         <?php } else {?>
             <h3><?php echo $message ?></h3>
         <?php } ?> 
     </div>
     <body>    
         <div class="container">
-            <div class="row justify-content-center" style="margin-top: 150px;">
+            <div class="row justify-content-center" style="margin-top: 75px;">
                 <div class="col-md-4">
                     <h2 class="text-center">Войти</h2>
-
-                    <?php if($isValidRegistration != ""){ ?>
-                    <label for="isRegistered" style="color:   #61dc00;"><?php echo $isValidRegistration ?></label>
-                    <?php } else if($isLogined != ""){ ?>
-                    <label for="isLogined" style="color:   #d30000;"><?php echo $isLogined ?></label>
+                    <?php
+                    if(isset($_SESSION["isValidRegistration"])){?>
+                            <label for="isRegistered" style="color: #61dc00;"><?php echo "Регистрация прошла успешно" ?></label>  
+                    <?php
+                    }
+                    else if(isset($_SESSION["wrongLogin"])){?>
+                        <label for="isLogined" style="color: #d30000;"><?php echo "Пользователя с такой почтой нет" ?></label>
+                    <?php }
+                    else if (isset($_SESSION["wrongPasswd"])){?>
+                        <label for="isLogined" style="color: #d30000;"><?php echo "Неверный пароль" ?></label>
                     <?php } ?>
                     <form action="check_login.php" method="POST">
                         <div class="form-group">
@@ -61,4 +60,7 @@
     unset($_SESSION["isPasswordValid"]);
     unset($_SESSION["isAlredyRegistered"]);
     unset($_SESSION["isLogined"]);
+    unset($_SESSION["email"]);
+    unset($_SESSION["wrongPasswd"]);
+    unset($_SESSION["wrongLogin"]);
 ?>
