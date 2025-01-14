@@ -1,2 +1,8 @@
-#docker mariadb metafiles
-/mariadb/*
+# docker mariadb metafiles volume
+mariadb/*
+
+# Keep the volume in repository
+!mariadb/
+
+#Keep the dump of db in the mariadb volume
+!mariadb/php_login_dump.sql
